@@ -1,33 +1,93 @@
-import * as Facebook from 'expo-facebook';
-import {AsyncStorage} from 'react-native';
+import {Facebook} from '../facebook/config';
+import {firebase} from '../firebase/config';
 import {
-    FACEBOOK_LOGIN_FAILED,
-    FACEBOOK_LOGIN_SUCCESS
+    LOGIN_FAILED,
+    LOGIN_SUCCESS,
+    EMAIL_CHANGED,
+    PASSWORD_CHANGED
 } from './types';
 
-export const loginFacebook = () => async(dispatch) => {
-    const token = await AsyncStorage.getItem('fb_token');
-    if(token){
-        dispatch({type:FACEBOOK_LOGIN_SUCCESS,payload:token});
-    }else{
+
+
+export const emailChanged = (text)=>(dispatch)=>{
+    dispatch({type:EMAIL_CHANGED,payload:text})
+}
+
+export const passwordChanged = (text)=>(dispatch)=>{
+    dispatch({type:PASSWORD_CHANGED,payload:text})
+}
+
+//signin user facebook
+export const loginFacebook = ()=> async (dispatch) => {
+    const user = firebase.auth().currentUser;
+    if(user){
+        dispatch({type:LOGIN_SUCCESS,payload:user})
+    } else{
         doFacebookLogin(dispatch);
     }
 }
 
-export const logoutFacebook = (callback)=> async (dispatch)=>{
-    await Facebook.logOutAsync();
-    await AsyncStorage.removeItem('fb_token')
-    dispatch({type:FACEBOOK_LOGIN_FAILED})
+
+//signin user firebase
+export const loginFirebase=({email,password},callback)=>async (dispatch)=>{
+    doFirebaseLogin({email,password},dispatch)
     callback();
 }
 
-const doFacebookLogin = async (dispatch) => {
+// signup user firebase
+export const signUpFirebase=({email,password})=>(dispatch)=>{
+    firebase.auth().createUserWithEmailAndPassword(email,password)
+    .then((user)=>{
+        storeUser(user)
+        dispatch({type:LOGIN_SUCCESS,payload: user})
+    })
+    .catch((err)=>{
+        dispatch({type:LOGIN_FAILED})
+    })
+}
+//sign with google
+export const loginGoogle=()=>async(dispatch)=>{
+    
+}
+// signout
+export const logoutFacebook = (callback)=> async (dispatch)=>{
+    await Facebook.logOutAsync();
+    firebase.auth().signOut().then(() => {
+        dispatch({type:LOGIN_FAILED});
+        callback();
+      }).catch((error) => {
+        console.error(error);
+      }); 
+}
+
+const doFacebookLogin=async (dispatch)=>{
     let {type,token}= await Facebook
     .logInWithReadPermissionsAsync({permissions:['public_profile', 'email']});
     if(type==='cancel') {
-        return dispatch({type:FACEBOOK_LOGIN_FAILED})
+        return dispatch({type:LOGIN_FAILED})
     }
-    await AsyncStorage.setItem('fb_token',token);
-    dispatch({type:FACEBOOK_LOGIN_SUCCESS, payload:token})
-    
+    const credential = firebase.auth
+    .FacebookAuthProvider.credential({ accessToken: token })
+    firebase.auth().signInWithCredential(credential).then((user)=>{
+        storeUser(user)
+        dispatch({type:LOGIN_SUCCESS, payload: user});
+    })
+    .catch(err=>console.error(err)) 
+}
+
+
+doFirebaseLogin= ({email,password},dispatch)=>{
+    firebase.auth().signInWithEmailAndPassword(email,password)
+    .then((user)=>{
+        storeUser(user);
+        dispatch({type:LOGIN_SUCCESS,payload: user})
+        callback();
+    })
+    .catch((err)=>{
+        dispatch({type:LOGIN_FAILED})
+    })
+}
+
+const storeUser = (user) => (dispatch)=>{
+    firebase.database().ref(`Kanu/${user.uid}`).set(user)
 }

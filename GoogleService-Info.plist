@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>286528072944-e2oidhv2gf0tr4gq7mupabj0ur3tr3f1.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.286528072944-e2oidhv2gf0tr4gq7mupabj0ur3tr3f1</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>286528072944-7cvju9gf0s8fqba7uivif4018ki0bihc.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyC7eJEpHOzPNqFb3Jsf-YpG_CD6aGalvws</string>
+	<key>GCM_SENDER_ID</key>
+	<string>286528072944</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.seydouniar.kanu</string>
+	<key>PROJECT_ID</key>
+	<string>kanu-d66f8</string>
+	<key>STORAGE_BUCKET</key>
+	<string>kanu-d66f8.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:286528072944:ios:245fad413b165e50dc6635</string>
+	<key>DATABASE_URL</key>
+	<string>https://kanu-d66f8-default-rtdb.europe-west1.firebasedatabase.app</string>
+</dict>
+</plist>

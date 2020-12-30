@@ -4,10 +4,10 @@ import LoginForm from '../components/LoginForm';
 import * as actions from '../actions'
 import {connect} from 'react-redux'
 
-class LoginScreen extends Component {
+class SignUpScreen extends Component {
     onButtonPressed(){
         const {email,password} = this.props;
-        this.props.loginFirebase({email,password},()=>{
+        this.props.signUpFirebase({email,password},()=>{
             this.props.navigation.navigate('main');
         });
         
@@ -16,7 +16,7 @@ class LoginScreen extends Component {
         return(
     <ImageBackground style={styles.image}
     source={require('../../assets/img/background.jpg')}>
-        <LoginForm title="Se connecter" onButtonPressed={this.onButtonPressed.bind(this)}/>
+        <LoginForm title="Enregistrer" onButtonPressed={this.onButtonPressed.bind(this)}/>
     </ImageBackground>
         )
     }
@@ -36,4 +36,4 @@ const mapStateToProps = (state)=>{
     return {email,password};
 }
 
-export default connect(mapStateToProps,actions)(LoginScreen);
+export default connect(mapStateToProps,actions)(SignUpScreen);

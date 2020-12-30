@@ -1,17 +1,25 @@
 import React, { Component } from 'react';
-import {View, Text} from 'react-native'
+import {View, Text, ImageBackground} from 'react-native'
 
 class MessagesScreen extends Component {
     render() {
         return(
-            <View>
-                <Text>MessagesScreen</Text>
-                <Text>MessagesScreen</Text>
-                <Text>MessagesScreen</Text>
-                <Text>MessagesScreen</Text>
-            </View>
+            <ImageBackground 
+            source = {require('../../assets/img/background.jpg')}
+            style={styles.image}>
+
+            </ImageBackground>
         )
     }
 }
+
+const styles = {
+    image: {
+        flex: 1,
+        resizeMode: 'cover',
+        marginTop:20
+      }
+}
+
 
 export default MessagesScreen;

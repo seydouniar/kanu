@@ -5,57 +5,33 @@ import {
     View,
     Text,
     Dimensions, 
-    AsyncStorage,
-    ImageBackground
+    ImageBackground,
 } from 'react-native';
 import * as actions from '../actions';
 import {connect} from 'react-redux';
 import _ from 'lodash';
-import AppLoading from 'expo-app-loading'
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import AppLoading from 'expo-app-loading';
+import {firebase} from '../firebase/config'
+
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 class WelcomeScreen extends Component {
-
-    state = {token:null}
-    async componentDidMount() {
-      let token = await AsyncStorage.getItem('fb_token');
-      if(token){
-        this.setState({token})
-        this.props.navigation.navigate('main')
-      } else {
-        this.setState({token:false})
-      }
-    }
-
-    async UNSAFE_componentWillUpdate() {
-        let token = await AsyncStorage.getItem('fb_token');
-        if(token){
-          this.setState({token})
-          this.props.navigation.navigate('main')
-        } else {
-          this.setState({token:false})
-        }
-      }
 
     onFacebookBtnPress=()=>{
         this.props.loginFacebook();
     }
 
-    onInstagramBtnPress(){
-
+    onGoogleBtnPress(){
+        this.props.loginGoogle();
     }
 
-    onButtonPress (){
-        this.props.navigation.navigate('login')
+    onButtonPress = (text)=>{
+        this.props.navigation.navigate(text)
     }
     
 render() {
-
-    if(_.isNull(this.state.token)){
-        return <AppLoading />
-    }
-
-    return(
+    return (
     <ImageBackground style={styles.image}
     source={require('../../assets/img/background.jpg')}>
     <ScrollView horizontal pagingEnabled>
@@ -78,19 +54,20 @@ render() {
                 button
                 raised
                 style={{width:300}}
-                title="Avec Instagram"
-                type='instagram'
+                title="Avec Google"
+                type='google'
+                onPress={this.onGoogleBtnPress.bind(this)}
                 />
             <Button  
             title="Créer un compte"
             buttonStyle={styles.button}
-            onPress={this.onButtonPress.bind(this)}
+            onPress={()=>this.onButtonPress('create')}
             />
             
             <Button
                 title="J'ai déjà un compte"
                 type="clear"
-                onPress={this.onButtonPress.bind(this)}
+                onPress={()=>this.onButtonPress('login')}
                 />
         </View>
                 
@@ -125,6 +102,6 @@ const styles = {
 }
 
 const mapToStateProps = ({auth})=>{
-    return { token:auth.token}
+    return { user:auth.user}
 }
 export default connect(mapToStateProps,actions)(WelcomeScreen);
