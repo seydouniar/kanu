@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import {Card,Button,Input,Image} from 'react-native-elements';
-import {Platform} from 'react-native';
+import {Button,Image} from 'react-native-elements';
+import {Platform, View} from 'react-native';
 import * as actions from '../actions';
 import {connect} from 'react-redux'
 import {DatePicker} from '../components/common'
@@ -40,15 +40,12 @@ class UserProfileForm extends Component {
         })
     }
     render() {
-        const {name,date}= this.props
+        const {name,date}= this.props;
+        const {image, container} = styles;
         return (
-            <Card>
-                <Image source={{uri:URI_DEFAULT}} style={{height:200}} />
-                <Input 
-                placeholder="nom" 
-                value={name}
-                onChangeText={this.onNameChanged.bind(this)}
-                />
+            <View style={container}>
+                <Image source={{uri:URI_DEFAULT}} style={image} />
+                
                 <DatePicker 
                     onChangeDate={this.onChange.bind(this)}
                     value = {date}
@@ -56,10 +53,25 @@ class UserProfileForm extends Component {
                     show={this.state.show}
                     onPress={this.showDatepicker.bind(this)}
                 />
-                <Button title="Enregistrer" onPress={this.onButtonPressed.bind(this)}/>
-            </Card>
+            </View>
         )
     }
+}
+
+const styles = {
+    container:{
+        flex:1,
+        justifyContent:'center',
+        alignItems:'center',
+        backgroundColor:'#fffc'
+    },
+    image:{
+        width:200,
+        height:200,
+        borderRadius:200/2,
+        alignItems:'center'
+    },
+
 }
 const mapStateToProps = (state)=>{
     const user = state.user

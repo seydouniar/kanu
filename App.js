@@ -25,11 +25,10 @@ const Stack = createStackNavigator();
 
 export const Profile = () => {
   return(
-    
       <Stack.Navigator>
-        <Stack.Screen name="registry" component={RegistryScreen} />
         <Stack.Screen name="profile" component={ProfileScreen} />
         <Stack.Screen name="setting" component={SettingScreen} />
+        <Stack.Screen name="registry" component={RegistryScreen} />
       </Stack.Navigator>
     
   )
@@ -43,8 +42,6 @@ export const Welcome = () =>{
       <Tab.Screen name="start" component={WelcomeScreen} />
       <Tab.Screen name="login" component={LoginScreen} />
       <Tab.Screen name="create" component={SignUpScreen} />
-      <Tab.Screen name="config" component={Profile} />
-      
     </Tab.Navigator>
   )
 }
@@ -75,6 +72,8 @@ export const Main = () => {
               iconName = focused ? 'heart' : 'heart-outline';
             } else if (route.name === 'messages') {
               iconName = focused ? 'chatbubbles' : 'chatbubbles-outline';
+            } else if (route.name === 'profile'){
+              iconName = focused ? 'person' : 'person-outline'
             }
             return <Ionicons name={iconName} size={size} color={color} />;
         }
@@ -82,6 +81,9 @@ export const Main = () => {
       <Tab.Screen name="map" component={MapScreen} />
       <Tab.Screen name="match" component={MatchScreen} />
       <Tab.Screen name="messages" component={MessagesScreen} />
+      <Tab.Screen name="profile">
+        {Profile}
+      </Tab.Screen>
     </Tab.Navigator>
   )
 }

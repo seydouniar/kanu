@@ -6,24 +6,32 @@ import _ from 'lodash'
 import {firebase} from '../firebase/config'
 import { CommonActions } from '@react-navigation/native';
 
+const URI_DEFAULT = 'https://linkpicture.com/q/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'
+
 class LoadingScreen extends Component {
     componentDidMount(){
         this.onLoginComplete()
     }
     
-
-
+    UNSAFE_componentWillUpdate(){
+        this.onLoginComplete()
+    }
+    UNSAFE_componentWillMount(){
+        this.onLoginComplete()
+    }
     onLoginComplete(){
         firebase.auth().onAuthStateChanged((user)=>{
-            if(user) {
-                this.props.navigation
+            if(user) {  
+                this.props.getUser();
+                if(this.props.user) {
+                    this.props.navigation
                 .dispatch(
                     CommonActions.navigate(
                         {name:'main' }
                     ),
                         CommonActions.reset(
                             {
-                                index: 1,
+                                index: 0,
                                 routes: [
                                 { name: 'match' },
                                
@@ -31,7 +39,17 @@ class LoadingScreen extends Component {
                             }
                         )
                 )
+                } else {
+                    const {displayName,email,photoURL} = user;
+                    this.props.storeUser({
+                        name:displayName?displayName:"",
+                        email,
+                        photoURL:photoURL?photoURL:URI_DEFAULT
+                    });
+                }
+                
             }else{
+                console.log("user");
                 this.props.navigation.navigate('welcome',{screen:'start'}); 
             } 
         });
