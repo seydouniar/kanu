@@ -7,7 +7,6 @@ import {
   LayoutAnimation,
   UIManager
 } from 'react-native';
-import { ButtonIcon } from './common';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
 const SCREEN_HEIGHT = Dimensions.get('window').height;
@@ -83,7 +82,8 @@ class Swipe extends Component {
 
   resetPosition() {
     Animated.spring(this.state.position, {
-      toValue: { x: 0, y: 0 }
+      toValue: { x: 0, y: 0 },
+      useNativeDriver: true
     }).start();
   }
 
@@ -138,13 +138,7 @@ class Swipe extends Component {
       <View>
         {this.renderCards()}
       </View>
-      <View style={styles.viewButtons}>
-            <ButtonIcon name="heart-dislike" 
-            color="#ddd" onPress={this.onDislike.bind(this)}/>
-            <ButtonIcon name="refresh" color="#1ff"/>
-            <ButtonIcon name="heart" 
-            color="#f00" onPress={this.onLike.bind(this)}/>
-        </View>
+      
     </View>
     );
   }

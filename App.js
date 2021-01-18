@@ -89,7 +89,10 @@ export const Main = () => {
 }
 
 class App extends Component {
-  
+  constructor(){
+    super();
+    console.ignoredYellowBox = ['Setting a timer'];
+  }
   render() {
     return (
       <Provider store={store}>

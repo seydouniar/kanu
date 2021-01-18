@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "286528072944",
+    "firebase_url": "https://kanu-d66f8-default-rtdb.europe-west1.firebasedatabase.app",
+    "project_id": "kanu-d66f8",
+    "storage_bucket": "kanu-d66f8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:286528072944:android:c038b952f9b771bcdc6635",
+        "android_client_info": {
+          "package_name": "com.seydouniar.kanu"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "286528072944-7cvju9gf0s8fqba7uivif4018ki0bihc.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.seydouniar.kanu",
+            "certificate_hash": "06908e68ca8c8d5b68183e6b19c703192c9e63dd"
+          }
+        },
+        {
+          "client_id": "286528072944-j6obbr5g8gdab4atus8uccm0gp39isu0.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDzDRpi-npTkqBcsYRDzX2ycOHssO-AAFw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "286528072944-j6obbr5g8gdab4atus8uccm0gp39isu0.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "286528072944-e2oidhv2gf0tr4gq7mupabj0ur3tr3f1.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.seydouniar.kanu"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

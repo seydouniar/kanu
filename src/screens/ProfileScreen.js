@@ -1,15 +1,15 @@
 import React, { Component } from 'react';
 import { ImageBackground,View} from 'react-native';
 import {Button} from 'react-native-elements'
-import {Header, Profile} from '../components/common';
+import {Header,Profile} from '../components/common';
 import UserProfileInfo from '../components/UserProfileInfo';
 import {connect} from 'react-redux';
 import * as actions from '../actions';
-import * as ImagePicker from 'expo-image-picker';
+
 
 
 class ProfileScreen extends Component {
-    state = {visible:false,uri:null};
+    state = {visible:false,uri:null, visibleGalery:false};
 
     UNSAFE_componentWillUpdate(){
         this.props.getUser()
@@ -20,59 +20,49 @@ class ProfileScreen extends Component {
                 headerShown:false
             }
         );
-        if (Platform.OS !== 'web') {
-            const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-            if (status !== 'granted') {
-              alert('Sorry, we need camera roll permissions to make this work!');
-            }
-          }
-        
     }
 
+    childrenRender(){
+        return (
+        <View>
+            <Button
+            title="Galerie" 
+            type='outline'
+            onPress={()=>this.setState({visibleGalery:false})}/>
+            <Button title="appareil" type="outline"
+            onPress={()=>this.setState({visibleGalery:false})}
+            />
+        </View>)
+    }
     onRequestClose(){
         this.setState({visible:false})
+        this.setState({visibleGalery:false})
+        console.log("on request close");
     }
 
     gotoSetting(){
         this.props.navigation.navigate('setting')
     }
-    async onPressIcon(){
-        const { status } = await ImagePicker.requestMediaLibraryPermissionsAsync();
-        if (status !== 'granted') {
-            alert('Sorry, we need camera roll permissions to make this work!');
-        }else{
-            let result = await ImagePicker.launchImageLibraryAsync({
-                mediaTypes: ImagePicker.MediaTypeOptions.All,
-                allowsEditing: true,
-                aspect: [5, 6],
-                quality: 1,
-            });
-            if(!result.cancelled){
-                this.setState({uri:result.uri})
-                this.props.updatePhoto( result.uri)
-            }
-             
-            
-        }
+    onPressIcon(){
+        this.setState({visibleGalery: true});
     }
     onPressImage(){
-        this.setState({visible:true});
+        console.log("image pressed");
+        //this.setState({visible:true});
     }
 
     closeModal(){
         this.setState({visible:false});
-        console.log(this.state.visible);
     }
-
+    
     disconnect(){
         this.props.logoutFacebook(()=>{
             this.props.navigation.navigate('welcome',{screen:'loading'})
         })
     }
     render() {
-        
         return(
-            <ImageBackground 
+        <ImageBackground 
             source = {require('../../assets/img/background.jpg')}
             style={styles.image}>
             <Header onPress={this.gotoSetting.bind(this)}/>
@@ -80,16 +70,16 @@ class ProfileScreen extends Component {
                 <Profile 
                     onPressImage={this.onPressImage.bind(this)}
                     onPressIcon = {this.onPressIcon.bind(this)}
-                    user = {this.props.user.user}
+                    photoURL = {this.props.user.photoURL}
+                    name = {this.props.user.name}
                     />
                 <Button type="outline" title="Deconnexion" onPress={this.disconnect.bind(this)}/>
             </View>
             <UserProfileInfo 
-            visible={this.state.visible}
-            uri_image={this.props.user.user.photoURL} 
-            closeModal={this.closeModal.bind(this)}
-            onRequestClose={this.onRequestClose.bind(this)}/>
-            </ImageBackground>
+                visible={this.state.visible}
+                uri_image={this.props.user.photoURL} 
+                onRequestClose={this.onRequestClose.bind(this)}/>    
+        </ImageBackground>
         )
     }
 }
@@ -100,6 +90,7 @@ const styles = {
         alignItems:'center',
         backgroundColor:'#fffd'
     },
+    
     image: {
         flex: 1,
         resizeMode: 'cover',
@@ -108,6 +99,7 @@ const styles = {
 }
 
 const mapStateToprops =  (state)=>{
-    return {user:state.user}
+    const user=state.user.user;
+    return {user}
 }
 export default connect(mapStateToprops,actions)(ProfileScreen);

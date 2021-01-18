@@ -1,19 +1,19 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
 import {Button} from 'react-native-elements';
 import IonIcons from 'react-native-vector-icons/Ionicons'
 
 const URI_DEFAULT = '../../../assets/img/default_user.jpg';
 
-const Profile = ({onPressImage, onPressIcon,user}) =>{
+const Profile =({onPressImage,onPressIcon,photoURL,name})=>  {
     
     return (
         <View style={styles.container}>
             <TouchableWithoutFeedback onPress={onPressImage}>
                 <View>
                 {   
-                    user.photoURL?
-                    <Image source={{uri:user.photoURL}} style={styles.imageProfile} />:
+                    this.props.photoURL?
+                    <Image source={{photoURL}} style={styles.imageProfile} />:
                     <Image source={require(URI_DEFAULT)} style={styles.imageProfile} />
                 }
                 </View>
@@ -26,12 +26,12 @@ const Profile = ({onPressImage, onPressIcon,user}) =>{
             </TouchableWithoutFeedback>
             
 
-            <Text style={styles.textStyle}>{user.name}, Age</Text>
+            <Text style={styles.textStyle}>{name}, Age</Text>
             <Button type="clear" title="Modifier votre profile"/>
             
         </View>
-    )
-};
+    );
+}
 
 const styles = {
     container:{

@@ -9,6 +9,7 @@ import { CommonActions } from '@react-navigation/native';
 const URI_DEFAULT = 'https://linkpicture.com/q/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'
 
 class LoadingScreen extends Component {
+    
     componentDidMount(){
         this.onLoginComplete()
     }
@@ -49,7 +50,6 @@ class LoadingScreen extends Component {
                 }
                 
             }else{
-                console.log("user");
                 this.props.navigation.navigate('welcome',{screen:'start'}); 
             } 
         });
@@ -73,7 +73,7 @@ const styles = StyleSheet.create({
 });
 
 const mapStateTopProps = (state)=>{
-    const user=state.user;
-    return user
+    const user=state.user.user;
+    return {user}
 }
 export default connect(mapStateTopProps,actions)(LoadingScreen);

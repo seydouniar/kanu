@@ -14,9 +14,17 @@ import IonIcons from 'react-native-vector-icons/Ionicons'
 const SCREEN_HEIGHT = Dimensions.get('screen').height;
 
 class UserProfileInfo extends Component {
-    state = {top:true}
-    
+    state = {top:true,visible:false}
+    UNSAFE_componentWillMount(){
+        this.setVisibleModal(this.props.visible);
+    }
+    UNSAFE_componentWillReceiveProps(nextProps){
+        this.setVisibleModal(nextProps.visible)
+    }
 
+    setVisibleModal(visible){
+        this.setState({visible});
+    }
     onScroll(event){
         const y = event.nativeEvent.contentOffset.y;
         if(y<=10){
@@ -30,12 +38,10 @@ class UserProfileInfo extends Component {
         return <Modal
             animationType="slide"
             transparent={true}
-            visible={this.props.visible}
+            visible={this.state.visible}
             style={styles.modalStyle}
-            onRequestClose={this.props.onRequestClose}>
+            onRequestClose={()=>this.props.onRequestClose()}>
             <View style= {styles.container}>
-                
-                
                 <ScrollView 
                 onScroll={this.onScroll.bind(this)}
                 style={styles.modalStyle}
@@ -63,7 +69,7 @@ class UserProfileInfo extends Component {
                 </View>
 
                 <View style={styles.iconCloseStyle}>
-                    <TouchableWithoutFeedback onPress={this.props.closeModal}>
+                    <TouchableWithoutFeedback onPress={()=>this.setVisibleModal(!this.state.visible)}>
                         <View >
                             <IonIcons name="close" color="gray" size={40} />
                         </View> 
