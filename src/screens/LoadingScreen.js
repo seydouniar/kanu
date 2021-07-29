@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import {ImageBackground, ActivityIndicator,StyleSheet} from 'react-native'
+import {ImageBackground, Text, ActivityIndicator,StyleSheet} from 'react-native'
 import {connect} from 'react-redux';
 import * as actions from '../actions';
 import _ from 'lodash'
@@ -9,11 +9,11 @@ import { CommonActions } from '@react-navigation/native';
 const URI_DEFAULT = 'https://linkpicture.com/q/depositphotos_166074422-stock-illustration-default-avatar-profile-icon-grey.jpg'
 
 class LoadingScreen extends Component {
-    
+
     componentDidMount(){
         this.onLoginComplete()
     }
-    
+
     UNSAFE_componentWillUpdate(){
         this.onLoginComplete()
     }
@@ -22,7 +22,7 @@ class LoadingScreen extends Component {
     }
     onLoginComplete(){
         firebase.auth().onAuthStateChanged((user)=>{
-            if(user) {  
+            if(user) {
                 this.props.getUser();
                 if(this.props.user) {
                     this.props.navigation
@@ -35,7 +35,7 @@ class LoadingScreen extends Component {
                                 index: 0,
                                 routes: [
                                 { name: 'match' },
-                               
+
                                 ]
                             }
                         )
@@ -48,17 +48,18 @@ class LoadingScreen extends Component {
                         photoURL:photoURL?photoURL:URI_DEFAULT
                     });
                 }
-                
+
             }else{
-                this.props.navigation.navigate('welcome',{screen:'start'}); 
-            } 
+                this.props.navigation.navigate('welcome',{screen:'start'});
+            }
         });
     }
 
     render() {
         return (
         <ImageBackground source={require('../../assets/img/background.jpg')} style={styles.image}>
-            <ActivityIndicator size='large' color="#fff"/>
+            <ActivityIndicator size='large' color="#fff" />
+            <Text style={styles.textStyle}>Loading...</Text>
         </ImageBackground>
         );
     }
@@ -69,6 +70,10 @@ const styles = StyleSheet.create({
         flex: 1,
         resizeMode: 'cover',
         justifyContent: 'center',
+    },
+    textStyle:{
+      fontSize:30,
+      alignSelf:'center'
     }
 });
 

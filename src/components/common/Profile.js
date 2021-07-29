@@ -5,14 +5,14 @@ import IonIcons from 'react-native-vector-icons/Ionicons'
 
 const URI_DEFAULT = '../../../assets/img/default_user.jpg';
 
-const Profile =({onPressImage,onPressIcon,photoURL,name})=>  {
+const Profile =({onPressImage,onPressIcon,photoURL,name}) =>  {
     
     return (
         <View style={styles.container}>
             <TouchableWithoutFeedback onPress={onPressImage}>
                 <View>
                 {   
-                    this.props.photoURL?
+                    photoURL?
                     <Image source={{photoURL}} style={styles.imageProfile} />:
                     <Image source={require(URI_DEFAULT)} style={styles.imageProfile} />
                 }
