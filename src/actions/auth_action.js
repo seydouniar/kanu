@@ -29,9 +29,8 @@ export const loginFacebook = ()=> async (dispatch) => {
 
 
 //signin user firebase
-export const loginFirebase=({email,password},callback)=>async (dispatch)=>{
-    doFirebaseLogin({email,password},dispatch)
-    callback();
+export const loginFirebase=({email,password},callback,errorFunc)=>async (dispatch)=>{
+    doFirebaseLogin({email,password},callback,errorFunc,dispatch)
 }
 
 // signup user firebase
@@ -42,7 +41,7 @@ export const signUpFirebase=({email,password})=>(dispatch)=>{
         dispatch({type:LOGIN_SUCCESS,payload: user})
     })
     .catch((err)=>{
-        dispatch({type:LOGIN_FAILED})
+        dispatch({type:LOGIN_FAILED, payload:err.message})
     })
 }
 //sign with google
@@ -76,7 +75,7 @@ const doFacebookLogin=async (dispatch)=>{
 }
 
 
-doFirebaseLogin= ({email,password},dispatch)=>{
+doFirebaseLogin= ({email,password},callback,errfunc,dispatch)=>{
     firebase.auth().signInWithEmailAndPassword(email,password)
     .then((user)=>{
         storeUser(user);
@@ -84,7 +83,8 @@ doFirebaseLogin= ({email,password},dispatch)=>{
         callback();
     })
     .catch((err)=>{
-        dispatch({type:LOGIN_FAILED})
+        dispatch({type:LOGIN_FAILED,payload:err.message})
+        errfunc(err)
     })
 }
 

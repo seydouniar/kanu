@@ -7,14 +7,15 @@ import {
 const INITIAL_STATE = {
   email:'',
   password:'',
-  user: null
+  user: null,
+  error:null
 }
 export default (state=INITIAL_STATE,action)=>{
   switch (action.type) {
     case LOGIN_SUCCESS:
-      return {...state,user:action.payload};
+      return {...state,user:action.payload,error:null};
     case LOGIN_FAILED:
-      return {...state,user:null};
+      return {...state,user:null,error:action.payload,email:"",password:""};
     case EMAIL_CHANGED:
       return {...state,email:action.payload};
     case PASSWORD_CHANGED:

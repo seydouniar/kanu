@@ -5,12 +5,14 @@ class SettingScreen extends Component {
     componentDidMount(){
         this.props.navigation.setOptions({
             title: 'Paramètres',
+            
             headerStyle: {
-                backgroundColor: '#ffff00aa',
+                backgroundColor: '#0ac',
               },
             headerTitleStyle: {
                 fontWeight: 'bold',
-                alignItems:'center'
+                alignItems:'center',
+                color:'white'
               }
         })
     }

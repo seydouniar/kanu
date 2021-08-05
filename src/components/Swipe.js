@@ -5,7 +5,7 @@ import {
   PanResponder,
   Dimensions,
   LayoutAnimation,
-  UIManager
+  UIManager,
 } from 'react-native';
 
 const SCREEN_WIDTH = Dimensions.get('window').width;
@@ -22,7 +22,6 @@ class Swipe extends Component {
 
   constructor(props) {
     super(props);
-
     const position = new Animated.ValueXY();
     const panResponder = PanResponder.create({
       onStartShouldSetPanResponder: () => true,
@@ -43,17 +42,19 @@ class Swipe extends Component {
     this.state = { panResponder, position, index: 0 };
   }
 
+ 
   UNSAFE_componentWillReceiveProps(nextProps) {
     if (nextProps.data !== this.props.data) {
       this.setState({ index: 0 });
     }
+   
   }
 
   UNSAFE_componentWillUpdate() {
     UIManager.setLayoutAnimationEnabledExperimental && UIManager.setLayoutAnimationEnabledExperimental(true);
     LayoutAnimation.spring();
   }
-
+  
   onLike(){
     this.forceSwipe('right');
   }
@@ -67,7 +68,7 @@ class Swipe extends Component {
     Animated.timing(this.state.position, {
       toValue: { x, y: 0 },
       duration: SWIPE_OUT_DURATION,
-      useNativeDriver:false
+      useNativeDriver:false,
     }).start(() => this.onSwipeComplete(direction));
   }
 
@@ -83,7 +84,7 @@ class Swipe extends Component {
   resetPosition() {
     Animated.spring(this.state.position, {
       toValue: { x: 0, y: 0 },
-      useNativeDriver: true
+      useNativeDriver:false
     }).start();
   }
 
@@ -115,7 +116,7 @@ class Swipe extends Component {
             style={[this.getCardStyle(), styles.cardStyle, { zIndex: 99 }]}
             {...this.state.panResponder.panHandlers}
           >
-            {this.props.renderCard(item)}
+            {this.props.renderCard(item,this.onLike.bind(this),this.onDislike.bind(this))}
             
           </Animated.View>
         );
@@ -124,9 +125,9 @@ class Swipe extends Component {
       return (
         <Animated.View
           key={item.id}
-          style={[styles.cardStyle, { top: 5 * (i - this.state.index), zIndex: 5 }]}
+          style={[styles.cardStyle, { top: 1 * (i - this.state.index), zIndex: 1 }]}
         >
-          {this.props.renderCard(item)}
+          {this.props.renderCard(item,this.onLike,this.onDislike)}
         </Animated.View>
       );
     }).reverse();

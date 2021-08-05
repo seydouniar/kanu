@@ -1,42 +1,40 @@
 import React from 'react';
 import {View, Text, Image, TouchableWithoutFeedback} from 'react-native';
-import {Button} from 'react-native-elements';
 import IonIcons from 'react-native-vector-icons/Ionicons'
 
 const URI_DEFAULT = '../../../assets/img/default_user.jpg';
 
-const Profile =({onPressImage,onPressIcon,photoURL,name}) =>  {
+const Profile =({onPressImage,onPressIcon,photoURL, name,age})=>  {
     
     return (
-        <View style={styles.container}>
+        <View>
             <TouchableWithoutFeedback onPress={onPressImage}>
                 <View>
                 {   
                     photoURL?
-                    <Image source={{photoURL}} style={styles.imageProfile} />:
+                    <Image source={{uri:photoURL}} style={styles.imageProfile} />:
                     <Image source={require(URI_DEFAULT)} style={styles.imageProfile} />
                 }
                 </View>
             </TouchableWithoutFeedback>
 
-            <TouchableWithoutFeedback onPress={onPressIcon}>
-                <View style={styles.iconStyle}>
-                    <IonIcons name="camera" color="green" size={40} />
-                </View> 
-            </TouchableWithoutFeedback>
-            
+            <View style={styles.iconStyle}>
+                <TouchableWithoutFeedback onPress={onPressIcon}>
+                    <View>
+                        <IonIcons name="camera" color="#5cf" size={40} />
+                    </View> 
+                </TouchableWithoutFeedback>
 
-            <Text style={styles.textStyle}>{name}, Age</Text>
-            <Button type="clear" title="Modifier votre profile"/>
+            </View>
+            
+            <Text style={styles.textStyle}>{name}, {age}</Text>
             
         </View>
     );
 }
 
 const styles = {
-    container:{
-        alignItems:'center',
-    },
+ 
     textStyle:{
         fontSize:25,
         marginTop:10
@@ -48,14 +46,14 @@ const styles = {
     },
     iconStyle:{
         position:'absolute',
-        width:70,
-        height:70,
-        right:20,
-        bottom:70,
-        justifyContent:'center',
+        width:50,
+        height:50,
+        top:150,
+        right:10,
+        borderRadius:25,
+        backgroundColor:'#000a',
         alignItems:'center',
-        backgroundColor:'#fff',
-        borderRadius:40
+        justifyContent:'center'
     }
 }
 

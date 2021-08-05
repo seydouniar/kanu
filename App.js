@@ -19,25 +19,16 @@ import store from './src/store'
 import {Provider} from 'react-redux'
 
 import SignUpScreen from './src/screens/SignUpScreen';
+import EditScreen from './src/screens/EditScreen';
+import SingleMessageScreen from './src/screens/SingleMessageScreen';
 
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
 
-export const Profile = () => {
-  return(
-      <Stack.Navigator>
-        <Stack.Screen name="profile" component={ProfileScreen} />
-        <Stack.Screen name="setting" component={SettingScreen} />
-        <Stack.Screen name="registry" component={RegistryScreen} />
-      </Stack.Navigator>
-    
-  )
-}
 
 export const Welcome = () =>{
   return (
-    <Tab.Navigator lazy={true}
-    screenOptions={{tabBarVisible:false}}>
+    <Tab.Navigator screenOptions={{tabBarVisible:false}}>
       <Tab.Screen name="loading" component={LoadingScreen} />
       <Tab.Screen name="start" component={WelcomeScreen} />
       <Tab.Screen name="login" component={LoginScreen} />
@@ -45,7 +36,6 @@ export const Welcome = () =>{
     </Tab.Navigator>
   )
 }
-
 
 
 export const Main = () => {
@@ -61,6 +51,7 @@ export const Main = () => {
        }
         }}
       screenOptions={({route})=>({
+        
         tabBarIcon:({ focused, color, size })=>{
           let iconName;
 
@@ -81,9 +72,8 @@ export const Main = () => {
       <Tab.Screen name="map" component={MapScreen} />
       <Tab.Screen name="match" component={MatchScreen} />
       <Tab.Screen name="messages" component={MessagesScreen} />
-      <Tab.Screen name="profile">
-        {Profile}
-      </Tab.Screen>
+      <Tab.Screen name="profile" component={ProfileScreen} />
+        
     </Tab.Navigator>
   )
 }
@@ -97,13 +87,14 @@ class App extends Component {
     return (
       <Provider store={store}>
         <NavigationContainer >
-          <Tab.Navigator 
-          lazy={true}
-          screenOptions={{tabBarVisible:false}}
-           >
-            <Tab.Screen name="welcome" component={Welcome} />
-            <Tab.Screen name="main" component={Main} />
-          </Tab.Navigator>
+          <Stack.Navigator >
+            <Stack.Screen name="welcome" component={Welcome} options={ {headerShown: false}} />
+            <Stack.Screen name="main" component={Main} options={ {headerShown: false}} />
+            <Stack.Screen name="setting" component={SettingScreen} />
+            <Stack.Screen name="registry" component={RegistryScreen} />
+            <Stack.Screen name="edit" component={EditScreen}/>
+            <Stack.Screen name="singlemsg" component={SingleMessageScreen} options={ {headerShown: false}}/>
+          </Stack.Navigator>
         </NavigationContainer>
       </Provider>
     );

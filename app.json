@@ -31,6 +31,11 @@
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#FFFFFF"
       },
+      "config":{
+        "googleMaps":{
+          "apiKey":"AIzaSyDOYAEDOZNHLhD0p0cOHoPmZGC28-ndNPA"
+        }
+      },
       "package": "com.seydouniar.kanu",
       "googleServicesFile": "./google-services.json"
     },
